@@ -15,22 +15,22 @@
     <div class="row justify-content-center card-body">
         <div class="col-md-6">
             <h2 class="mt-5 mb-3">Đăng ký tài khoản</h2>
-            <form method="post" action="">
+            <form method="post" action="create">
                 <div class="mb-3">
                     <label for="username" class="form-label">Tên đăng nhập</label>
-                    <input type="text" class="form-control" id="username" placeholder="Nhập tên đăng nhập">
+                    <input type="text" class="form-control" id="username" name="username" placeholder="Nhập tên đăng nhập">
                 </div>
                 <div class="mb-3">
                     <label for="email" class="form-label">Email</label>
-                    <input type="email" class="form-control" id="email" placeholder="Nhập địa chỉ email">
+                    <input type="email" class="form-control" id="email" name="email" placeholder="Nhập địa chỉ email">
                 </div>
                 <div class="mb-3">
                     <label for="password" class="form-label">Mật khẩu</label>
-                    <input type="password" class="form-control" id="password" placeholder="Nhập mật khẩu">
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Nhập mật khẩu">
                 </div>
                 <div class="mb-3">
-                    <label for="confirm-password" class="form-label">Xác nhận mật khẩu</label>
-                    <input type="password" class="form-control" id="confirm-password" placeholder="Xác nhận mật khẩu">
+                    <label for="password_confirm" class="form-label">Xác nhận mật khẩu</label>
+                    <input type="password" class="form-control" id="password_confirm" name="password_confirm" placeholder="Xác nhận mật khẩu">
                 </div>
                 <button id="registerBtn" type="submit" class="btn btn-primary">Đăng ký</button>
             </form>
@@ -56,10 +56,11 @@
             toast.addEventListener('mouseleave', Swal.resumeTimer)
         }
     })
-    function registe() {
+    function register() {
         $('#registerBtn').click(function(e) {
             e.preventDefault();
             var username = $('#username').val().trim();
+            var email = $('#email').val().trim();
             var password = $('#password').val().trim();
             var password_confirm = $('#password_confirm').val().trim();
             if (username === '') {
@@ -88,6 +89,7 @@
                     type: 'POST',
                     data: {
                         username: username,
+                        email: email,
                         password: password,
                     },
                     dataType: "JSON",

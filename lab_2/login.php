@@ -15,7 +15,7 @@
     <div class="row justify-content-center card-body">
         <div class="col-md-6">
             <h2 class="mt-5 mb-3">Đăng nhập</h2>
-            <form method="post" action="">
+            <form method="post" action="checkLogin">
                 <div class="mb-3">
                     <label for="username" class="form-label">Tên đăng nhập</label>
                     <input type="text" class="form-control" id="username" name="username" placeholder="Nhập tên đăng nhập">
@@ -52,8 +52,8 @@
     function login() {
         $("#loginBtn").click(function (e){
             e.preventDefault();
-            var username = $("#username").val();
-            var password = $("#password").val();
+            var username = $("#username").val().trim();
+            var password = $("#password").val().trim();
             if (username === '') {
                 Toast.fire({
                     icon: 'error',
