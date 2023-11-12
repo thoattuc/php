@@ -89,7 +89,7 @@
                 })
             } else {
                 $.ajax({
-                    url: 'controllers.php?action=create',
+                    url: '/lab_2/controllers.php?action=create',
                     type: 'POST',
                     data: {
                         username: username,
@@ -103,7 +103,7 @@
                                 icon: 'success',
                                 title: "Đăng ký thành công"
                             }).then(() => {
-                                window.location.replace('?page=login');
+                                window.location.replace('/lab_2/?page=login');
                             });
                         } else {
                             Toast.fire({
@@ -120,7 +120,6 @@
                     }
                 })
             }
-
         })
     }
 </script>
