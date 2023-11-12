@@ -89,6 +89,12 @@
                                 });
                             }
                         }
+                    },
+                    error: function (response) {
+                        Toast.fire({
+                            icon: 'error',
+                            title: 'Có lỗi xảy ra'
+                        })
                     }
                 })
             }

@@ -1,4 +1,5 @@
 <?php
+    session_start();
     $page='';
     if(isset($_GET['page'])){
         $page=$_GET['page'];

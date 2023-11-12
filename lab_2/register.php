@@ -18,7 +18,8 @@
             <form method="post" action="create">
                 <div class="mb-3">
                     <label for="username" class="form-label">Tên đăng nhập</label>
-                    <input type="text" class="form-control" id="username" name="username" placeholder="Nhập tên đăng nhập">
+                    <input type="text" class="form-control" id="username" name="username"
+                           placeholder="Nhập tên đăng nhập">
                 </div>
                 <div class="mb-3">
                     <label for="email" class="form-label">Email</label>
@@ -26,11 +27,13 @@
                 </div>
                 <div class="mb-3">
                     <label for="password" class="form-label">Mật khẩu</label>
-                    <input type="password" class="form-control" id="password" name="password" placeholder="Nhập mật khẩu">
+                    <input type="password" class="form-control" id="password" name="password"
+                           placeholder="Nhập mật khẩu">
                 </div>
                 <div class="mb-3">
                     <label for="password_confirm" class="form-label">Xác nhận mật khẩu</label>
-                    <input type="password" class="form-control" id="password_confirm" name="password_confirm" placeholder="Xác nhận mật khẩu">
+                    <input type="password" class="form-control" id="password_confirm" name="password_confirm"
+                           placeholder="Xác nhận mật khẩu">
                 </div>
                 <button id="registerBtn" type="submit" class="btn btn-primary">Đăng ký</button>
             </form>
@@ -42,7 +45,7 @@
         integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
         crossorigin="anonymous"></script>
 <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
         register()
     });
     const Toast = Swal.mixin({
@@ -56,8 +59,9 @@
             toast.addEventListener('mouseleave', Swal.resumeTimer)
         }
     })
+
     function register() {
-        $('#registerBtn').click(function(e) {
+        $('#registerBtn').click(function (e) {
             e.preventDefault();
             var username = $('#username').val().trim();
             var email = $('#email').val().trim();
@@ -85,7 +89,7 @@
                 })
             } else {
                 $.ajax({
-                    url: 'controllers.php?action=create',
+                    url: '/lab_2/controllers.php?action=create',
                     type: 'POST',
                     data: {
                         username: username,
@@ -93,13 +97,13 @@
                         password: password,
                     },
                     dataType: "JSON",
-                    success: function(res) {
-                        if (res.check ==='true') {
+                    success: function (res) {
+                        if (res.check === 'true') {
                             Toast.fire({
-                                icon:'success',
+                                icon: 'success',
                                 title: "Đăng ký thành công"
                             }).then(() => {
-                                window.location.replace('?page=login');
+                                window.location.replace('/lab_2/?page=login');
                             });
                         } else {
                             Toast.fire({
@@ -108,7 +112,7 @@
                             })
                         }
                     },
-                    error: function(response) {
+                    error: function (response) {
                         Toast.fire({
                             icon: 'error',
                             title: 'Có lỗi xảy ra'
@@ -116,7 +120,6 @@
                     }
                 })
             }
-
         })
     }
 </script>
