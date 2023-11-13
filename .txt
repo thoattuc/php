@@ -1,1 +1,5 @@
-$ composer create-project --prefer-dist laravel/laravel project_name
+composer create-project --prefer-dist laravel/laravel project_name
+
+or
+
+laravel new project_name
