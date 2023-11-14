@@ -25,6 +25,13 @@
       <sourceFolder url="file://$MODULE_DIR$/laravel_project/tests/Unit" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/spec" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/tests" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/web_laravel/app" isTestSource="false" packagePrefix="App\" />
+      <sourceFolder url="file://$MODULE_DIR$/web_laravel/database/factories" isTestSource="false" packagePrefix="Database\Factories\" />
+      <sourceFolder url="file://$MODULE_DIR$/web_laravel/database/seeders" isTestSource="false" packagePrefix="Database\Seeders\" />
+      <sourceFolder url="file://$MODULE_DIR$/web_laravel/tests" isTestSource="true" packagePrefix="Tests\" />
+      <sourceFolder url="file://$MODULE_DIR$/web_laravel/tests" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/web_laravel/tests/Feature" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/web_laravel/tests/Unit" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/Test/vendor/brick/math" />
       <excludeFolder url="file://$MODULE_DIR$/Test/vendor/composer" />
       <excludeFolder url="file://$MODULE_DIR$/Test/vendor/dflydev/dot-access-data" />

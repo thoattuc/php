@@ -5,7 +5,7 @@
     php artisan serve
 
  create controller:
-    artisan make:controller controller_name --model=model_name --resource
+    php artisan make:controller controller_name --model=model_name --resource
     app\http\controllers\
     app\http\models\
 
