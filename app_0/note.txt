@@ -1,0 +1,17 @@
+ Create laravel project
+
+ index[public] -> autoload[vendor] -> web|api|...[routes] -> views
+ start:
+    php artisan serve
+
+ create controller:
+    php artisan make:controller controller_name --model=model_name --resource
+    app\http\controllers\
+    app\http\models\
+
+ import controller into web router
+
+ create:
+
+    UserController; UserRoleController;
+    UserModel; UserRoleModel
