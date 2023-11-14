@@ -43,7 +43,7 @@
         }
 
         .account-icon {
-            color: white; /* Đổi màu icon thành màu trắng */
+            color: white;
         }
     </style>
 </head>
