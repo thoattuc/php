@@ -15,10 +15,3 @@
 
     UserController; UserRoleController;
     UserModel; UserRoleModel
-
-    dashboard;
-
-
-
-
-
