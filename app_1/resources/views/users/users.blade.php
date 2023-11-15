@@ -1,6 +1,6 @@
 @extends('layouts.layout')
 
-@section('content')
+@section('main')
     UserBlade
 @endsection
 

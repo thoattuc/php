@@ -19,14 +19,13 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-//Route::get('/user', [UserController::class, 'index']);
-//Route::post('/create', [UserController::class, 'create']);
+
 Route::controller(UserRoleController::class)->group(function () {
     Route::get('/user', 'index');
     Route::post('/create', 'create');
 });
 
-//Route::get('/role', [UserRoleController::class, 'index']);
 Route::controller(UserRoleController::class)->group(function () {
     Route::get('/role','index');
+    Route::post('/role', 'create');
 });
