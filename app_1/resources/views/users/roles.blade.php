@@ -47,8 +47,8 @@
             <tbody>
             @foreach($roles as $key => $item)
                 <tr class="">
-                    <td scope="row">{{++$key}}</td>
-                    <td>{{$item -> name}}</td>
+                    <th scope="row">{{++$key}}</th>
+                    <td><span class="editRoleName" data-id="{{$item -> id}}">{{$item -> name}}</span></td>
                     <td>
                         <label for="status"></label><select name="" id="status" class="border-none">
                             @if ($item -> status==0)
@@ -83,8 +83,16 @@
 
         $(document).ready(function () {
             addRole();
+            editRole();
         });
-
+        // Update:
+        function editRole() {
+            $('.editRoleName').click(function (e) {
+                e.preventDefault();
+                alert('click');
+            })
+        }
+        // Create:
         function addRole() {
             $('#addRoleBtn').click(function (e) {
                 e.preventDefault();

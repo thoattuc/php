@@ -31,6 +31,15 @@
             padding-top: 10px;
         }
 
+        span {
+            color: black;
+        }
+
+        span:hover {
+            text-decoration: none;
+            color: red;
+        }
+
         .sidebar a {
             padding: 10px 20px;
             display: block;
