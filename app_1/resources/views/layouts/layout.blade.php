@@ -13,7 +13,8 @@
     <!-- Sweetalert2 css -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.0/dist/sweetalert2.min.css">
     <!-- Jquery CDN-->
-    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"
+            integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
     <!-- Sweetalert2 js-->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.0/dist/sweetalert2.all.min.js"></script>
     <style>
@@ -64,8 +65,28 @@
         .account-icon {
             color: white;
         }
+
+        .swal2-modal, .swal2-toast {
+            border-radius: unset !important;
+
+        }
+        .swal2-modal button {
+            border-radius: unset !important;
+        }
     </style>
     <script>
+        // Sweetalert
+        const Toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 1500,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.onmouseenter = Swal.stopTimer;
+                toast.onmouseleave = Swal.resumeTimer;
+            }
+        });
         // CSRF token
         $.ajaxSetup({
             headers: {
@@ -76,19 +97,18 @@
 </head>
 
 <body>
-<div class="container-fluid">
+<div class="container-fluid m-auto">
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark row">
         <div class="col-md-2 logo">
             <a class="navbar-brand m-auto" href="#">Niam Dashboard</a>
         </div>
 
-        <div class="input-group search_bar col-md-5">
-            <input type="text" class="form-control border-none" placeholder="Tìm kiếm" aria-label="Tìm kiếm" aria-describedby="searchIcon">
-            <button class="input-group-append btn input-group-text border-none" id="searchIcon"><i class="fas fa-search"></i></button>
-        </div>
-
-        <div class="col-md-3">
+        <div class="input-group search_bar col-md-8">
+            <input type="text" class="form-control border-none" placeholder="Tìm kiếm" aria-label="Tìm kiếm"
+                   aria-describedby="searchIcon">
+            <button class="input-group-append btn input-group-text border-none" id="searchIcon"><i
+                    class="fas fa-search"></i></button>
         </div>
 
         <div class="col-md-2">
@@ -106,18 +126,17 @@
             <a href="#">Bài viết</a>
             <a href="#">Phản hồi</a>
         </div>
-        <div class="col-md-9 content">
+        <div class="col-md-10 content">
             <!-- Content Area -->
             @yield('main')
         </div>
-        <div class="col-md-1"></div>
     </div>
 </div>
 
 <!-- Bootstrap JS and dependencies -->
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script>
-// code
+    // code
 </script>
 </body>
 </html>

@@ -38,7 +38,29 @@ class UserRoleController extends Controller
         }
 
         UserRoleModel::create(['name' => $request->rolename]);
+        return response()->json(['check' => true]);
+    }
 
+    /**
+     * Update the status resource in storage.
+     */
+    public function switch(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'id' => 'required|exists:role_tbl,id',
+            'status' => 'required|numeric|min:0|max:1'
+        ], [
+            'id.required' => 'Thiếu tên loại tài khoản',
+            'id.exists' => 'Mã Loại tài khoản đã tồn tại',
+            'status.required' => 'Không có trạng thái tài khoản',
+            'status.numeric' => 'Trạng thái tài khoản không hợp lệ',
+            'status.min' => 'Trạng thái tài khoản không hợp lệ',
+            'status.max' => 'Trạng thái tài khoản không hợp lệ',
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['check' => false, 'msg' => $validator->errors()]);
+        }
+        UserRoleModel::where('id', $request->id)->update(['status' => $request->status]);
         return response()->json(['check' => true]);
     }
 
@@ -71,14 +93,39 @@ class UserRoleController extends Controller
      */
     public function update(Request $request, UserRoleModel $userRoleModel)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'id' => 'required|exists:role_tbl,id',
+            'rolename' => 'required|unique:role_tbl,name',
+        ], [
+            'rolename.required' => 'Thiếu tên loại tài khoản',
+            'rolename.unique' => 'Loại tài khoản đã tồn tại',
+            'id.required' => 'Thiếu mã tài khoản',
+            'id.exists' => 'Mã loại tài khoản không hợp lệ'
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['check' => false, 'msg' => $validator->errors()]);
+        }
+
+        UserRoleModel::where('id', $request->id)->update(['name' => $request->rolename]);
+        return response()->json(['check' => true]);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(UserRoleModel $userRoleModel)
+    public function destroy(Request $request, UserRoleModel $userRoleModel)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'id' => 'required|exists:role_tbl,id',
+        ], [
+            'id.required' => 'Thiếu mã tài khoản',
+            'id.exists' => 'Mã loại tài khoản không hợp lệ'
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['check' => false, 'msg' => $validator->errors()]);
+        }
+
+        UserRoleModel::where('id', $request->id)->destroy(['name' => $request->rolename]);
+        return response()->json(['check' => true]);
     }
 }

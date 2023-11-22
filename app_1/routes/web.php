@@ -20,12 +20,16 @@ Route::get('/', function () {
 });
 
 
-Route::controller(UserRoleController::class)->group(function () {
-    Route::get('/user', 'index');
-    Route::post('/create', 'create');
+Route::controller(UserController::class)->group(function () {
+    Route::get('/users', 'index');
+    Route::post('/createUser','create');
+
 });
 
 Route::controller(UserRoleController::class)->group(function () {
-    Route::get('/role','index');
-    Route::post('/role', 'create');
+    Route::get('/roles','index');
+    Route::post('/createRole', 'create');
+    Route::post('/updateRole', 'update');
+    Route::post('/switchRole', 'switch');
+    Route::post('/deleteRole/{id}', 'destroy');
 });

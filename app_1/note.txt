@@ -45,3 +45,14 @@
     @foreach
 
     ls 22, 23
+
+    .text()
+
+    update user role
+
+ 3. CRUD User
+    create modal[user.blade]
+
+    config send mail
+
+    ls 24, 25

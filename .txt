@@ -1,5 +1,9 @@
-composer create-project --prefer-dist laravel/laravel project_name
+install:
+	composer create-project --prefer-dist laravel/laravel project_name
+	or
+	laravel new project_name
 
-or
 
-laravel new project_name
+send mail:
+	thoattuc.hd@gmail.com
+	bxwzciozdrmegekx
