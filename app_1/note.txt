@@ -55,4 +55,4 @@
 
     config send mail
 
-    ls 24, 25
+    ls 24, 25, 26
