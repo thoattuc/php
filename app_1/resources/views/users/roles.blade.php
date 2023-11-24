@@ -33,7 +33,7 @@
 
     <div class="table-responsive">
         <h2>Danh sách các loại tài khoản:</h2>
-        <table class="table table-primary">
+        <table class="table table-secondary">
             <thead>
             <tr>
                 <th scope="col">ID</th>
@@ -90,7 +90,7 @@
                     if (result.isConfirmed) {
                         $.ajax({
                             type: "POST",
-                            url: "/deleteRole/"+id,
+                            url: "/deleteRole",
                             data: {
                                 id: id
                             },
@@ -104,7 +104,7 @@
                                         window.location.reload();
                                     });
                                 } else {
-                                    const errorMsg = res.msg.id || "Có lỗi xảy ra";
+                                    const errorMsg = res.msg.id || res.msg;
                                     Toast.fire({
                                         icon: "error",
                                         title: errorMsg

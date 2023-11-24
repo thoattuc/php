@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\UserModel;
 use App\Models\UserRoleModel;
 use App\Http\Controllers\Controller;
 use http\Env\Response;
@@ -125,7 +126,11 @@ class UserRoleController extends Controller
             return response()->json(['check' => false, 'msg' => $validator->errors()]);
         }
 
-        UserRoleModel::where('id', $request->id)->destroy(['name' => $request->rolename]);
+        $check = UserModel::where('idRole', $request -> id) -> count('id');
+        if ($check!==0) {
+            return response()->json(['check' => false, 'msg' => 'Có tài khoản trong loại tài khoản này']);
+        }
+        UserRoleModel::where('id', $request->id)->delete();
         return response()->json(['check' => true]);
     }
 }

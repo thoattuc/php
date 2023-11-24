@@ -31,5 +31,5 @@ Route::controller(UserRoleController::class)->group(function () {
     Route::post('/createRole', 'create');
     Route::post('/updateRole', 'update');
     Route::post('/switchRole', 'switch');
-    Route::post('/deleteRole/{id}', 'destroy');
+    Route::post('/deleteRole', 'destroy');
 });

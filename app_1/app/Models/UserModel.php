@@ -14,5 +14,12 @@ class UserModel extends Model
     protected $table = 'users';
     protected $fillable = ['id','name', 'email', 'password', 'idRole', 'status', 'phone'];
     protected $hidden = ['password', 'remember_token'];
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+        'password' => 'hashed'
+    ];
+    public function role() {
+        return $this->hasOne(UserRoleModel::class);
+    }
 
 }

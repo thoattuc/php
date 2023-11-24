@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Tests\Integration\Queue\Order;
 use App\Models\UserRoleModel;
@@ -20,8 +21,13 @@ class UserController extends Controller
     public function index()
     {
         $roles = UserRoleModel::where('status', 1) -> select('id', 'name') -> get();
-//        dd($roles);
-        return view('users.users', compact('roles'));
+        $users = DB::table('users')
+            ->join('role_tbl', 'users.idRole','=','role_tbl.id')
+            ->select('users.id as idUser','users.name as username','users.idRole as idRole','role_tbl.name as rolename', 'users.email as email','users.status as status','users.created_at')
+            ->get();
+//        $users=UserModel::with('users')->get();
+//        dd($users);
+        return view('users.users', compact('users', 'roles'));
     }
 
     /**
