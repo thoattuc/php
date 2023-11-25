@@ -20,10 +20,10 @@ class UserController extends Controller
      */
     public function index()
     {
-        $roles = UserRoleModel::where('status', 1) -> select('id', 'name') -> get();
+        $roles = UserRoleModel::where('status', 1)->select('id', 'name')->get();
         $users = DB::table('users')
-            ->join('role_tbl', 'users.idRole','=','role_tbl.id')
-            ->select('users.id as idUser','users.name as username','users.idRole as idRole','role_tbl.name as rolename', 'users.email as email','users.status as status','users.created_at')
+            ->join('role_tbl', 'users.idRole', '=', 'role_tbl.id')
+            ->select('users.id as idUser', 'users.name as username', 'users.email as email', 'users.status as status', 'users.created_at')
             ->get();
 //        $users=UserModel::with('users')->get();
 //        dd($users);
@@ -44,14 +44,15 @@ class UserController extends Controller
             'email.required' => 'Thiếu email tài khoản',
             'email.email' => 'Email không hợp lệ',
             'email.unique' => 'Email đã tồn tại',
-            'idRole.required' => 'Mã loại tài khoản không hợp lệ',
+            'idRole.required' => 'Mã loại tài khoản không tồn tại',
             'idRole.exists' => 'Mã loại tài khoản không hợp lệ'
         ]);
+
         if ($validator->fails()) {
             return response()->json(['check' => false, 'msg' => $validator->errors()]);
         }
 
-        $password = random_int(100000,999999);
+        $password = random_int(100000, 999999);
         $hash = Hash::make($password);
 
         UserModel::create([
@@ -59,7 +60,7 @@ class UserController extends Controller
             'email' => $request->email,
             'idRole' => $request->idRole,
             'password' => $hash,
-            ]);
+        ]);
 
         // Gửi email:
 //        $mailData = [
@@ -72,6 +73,24 @@ class UserController extends Controller
 //
 //        Mail::to($request -> email) -> send(new UserMail($mailData));
 
+        return response()->json(['check' => true]);
+    }
+
+    public function updateUserRole(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'id' => 'required|exists:users,id',
+            'idRole' => 'required|exists:role_tbl,id',
+        ], [
+            'id.required' => 'Thiếu mã tài khoản',
+            'id.exists' => 'Mã tài khoản không tồn tại',
+            'idRole.required' => 'Mã loại tài khoản không hợp lệ',
+            'idRole.exists' => 'Mã loại tài khoản không tồn tại'
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['check' => false, 'msg' => $validator->errors()]);
+        }
+        UserModel::where('id', $request->id)->update(['idRole' => $request->idRole, 'updated_at' => now()]);
         return response()->json(['check' => true]);
     }
 

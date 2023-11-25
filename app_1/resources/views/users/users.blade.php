@@ -21,10 +21,10 @@
                             <label for="email">Email:</label>
                             <input type="text" class="form-control  border-none" id="email" value="" name="email"
                                    placeholder="Email" required>
-                            <label for="userRole">Loại tài khoản:</label>
-                            <select name="" id="userRole" class="border-none form-control">
-                                @foreach($roles as $item)
-                                    <option value="{{$item -> id}}">{{$item -> name}}</option>
+                            <label for="userRoleSelect">Loại tài khoản:</label>
+                            <select name="idRole" id="userRoleSelect" class="border-none form-control">
+                                @foreach($roles as $value)
+                                    <option value="{{$value -> id}}">{{$value -> name}}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -59,12 +59,20 @@
             @foreach($users as $key => $item)
                 <tr class="">
                     <th scope="row">{{++$key}}</th>
-                    <td><span class="editName" data-id="{{$item -> idUser}}">{{$item -> username}}</span></td>
-                    <td><span class="editRole" data-id="{{$item -> idRole}}">{{$item -> rolename}}</span></td>
+                    <td><span class="editUserName" data-id="{{$item -> idUser}}">{{$item -> username}}</span></td>
+                    <td>
+                        <label for="{{$item->idUser}}">
+                            <select data-id="{{$item->idUser}}" id="{{$item->idUser}}" class="editUserRole border-none">
+                                @foreach($roles as $value)
+                                    <option value="{{$value-> id}}">{{$value -> name}}</option>
+                                @endforeach
+                            </select>
+                        </label>
+                    </td>
                     <td><span class="editEmail" data-id="{{$item -> idUser}}">{{$item -> email}}</span></td>
                     <td>
                         <label for="{{$item->idUser}}"></label>
-                        <select data-id="{{$item->idUser}}" id="{{$item->idUser}}" class="editRoleStatus border-none">
+                        <select data-id="{{$item->idUser}}" id="{{$item->idUser}}" class="editStatus border-none">
                             <option value="1" {{ $item->status ? 'selected' : '' }}>Đang mở</option>
                             <option value="0" {{ $item->status ? '' : 'selected' }}>Đang khóa</option>
                         </select>
@@ -88,10 +96,33 @@
         });
 
         function editUserRole() {
-            $('#editRole').click(function (e) {
+            $('.editUserRole').change(function (e) {
                 e.preventDefault();
-
-            })
+                const id = $(this).attr('data-id');
+                const idRole = $(this).val();
+                console.log(id, idRole);
+                $.ajax({
+                    type: 'POST',
+                    url: "/updateUserRole",
+                    data: {
+                        id: id,
+                        idRole: idRole
+                    },
+                    dataType: "json",
+                    success: function (res) {
+                        if (res.check === true) {
+                            showToastSuccess("Thay đổi loại tài khoản thành công");
+                            window.location.reload();
+                        } else {
+                            if (res.msg.id) {
+                                showToastError(res.msg.id);
+                            } else if (res.msg.idRole) {
+                                showToastError(res.msg.idRole);
+                            }
+                        }
+                    }
+                });
+            });
         }
 
         function addUser() {
@@ -108,7 +139,9 @@
             function handleFormSubmission() {
                 const name = $('#username').val().trim();
                 const email = $('#email').val().trim();
-                const idRole = parseInt($('#userRole option:selected').val(), 10);
+                const idRole = $('#userRoleSelect').val();
+
+                console.log(name, email, idRole);
 
                 if (name === '') {
                     showToastError("Thiếu tên tài khoản");

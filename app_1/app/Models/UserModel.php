@@ -18,7 +18,8 @@ class UserModel extends Model
         'email_verified_at' => 'datetime',
         'password' => 'hashed'
     ];
-    public function role() {
+    public function role(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
         return $this->hasOne(UserRoleModel::class);
     }
 

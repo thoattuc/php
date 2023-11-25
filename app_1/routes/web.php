@@ -23,6 +23,7 @@ Route::get('/', function () {
 Route::controller(UserController::class)->group(function () {
     Route::get('/users', 'index');
     Route::post('/createUser','create');
+    Route::post('/updateUserRole','updateUserRole');
 
 });
 
