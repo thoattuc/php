@@ -52,7 +52,7 @@ class UserRoleController extends Controller
             'status' => 'required|numeric|min:0|max:1'
         ], [
             'id.required' => 'Thiếu tên loại tài khoản',
-            'id.exists' => 'Mã Loại tài khoản đã tồn tại',
+            'id.exists' => 'Mã   Loại tài khoản đã tồn tại',
             'status.required' => 'Không có trạng thái tài khoản',
             'status.numeric' => 'Trạng thái tài khoản không hợp lệ',
             'status.min' => 'Trạng thái tài khoản không hợp lệ',

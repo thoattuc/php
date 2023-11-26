@@ -24,6 +24,7 @@ Route::controller(UserController::class)->group(function () {
     Route::get('/users', 'index');
     Route::post('/createUser','create');
     Route::post('/updateUserRole','updateUserRole');
+    Route::post('/switchUserStatus','switchUserStatus');
 
 });
 

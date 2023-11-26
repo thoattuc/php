@@ -94,6 +94,26 @@ class UserController extends Controller
         return response()->json(['check' => true]);
     }
 
+    public function switchUserstatus(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'id' => 'required|exists:users,id',
+            'status' => 'required|numeric|min:0|max:1'
+        ], [
+            'id.required' => 'Thiếu mã tài khoản',
+            'id.exists' => 'Mã tài khoản không tồn tại',
+            'status.required' => 'Trạng thái tài khoản không tồn tại',
+            'status.numeric' => 'Trạng thái tài khoản không hợp lệ',
+            'status.min' => 'Trạng thái tài khoaản không hợp lệ',
+            'status.max' => 'Trạng thái tài khoản không hợp lệ'
+        ]);
+        if ($validator-> fails()) {
+            return response() -> json(['check' => true, 'msg' => $validator -> error()]);
+        }
+        UserModel::where('id', $request -> id) -> update(['status' => $request -> status]);
+        return response() -> json(['check' => true]);
+    }
+
     /**
      * Store a newly created resource in storage.
      */

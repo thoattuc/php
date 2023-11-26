@@ -72,7 +72,7 @@
                     <td><span class="editEmail" data-id="{{$item -> idUser}}">{{$item -> email}}</span></td>
                     <td>
                         <label for="{{$item->idUser}}"></label>
-                        <select data-id="{{$item->idUser}}" id="{{$item->idUser}}" class="editStatus border-none">
+                        <select data-id="{{$item->idUser}}" id="{{$item->idUser}}" class="editUserStatus border-none">
                             <option value="1" {{ $item->status ? 'selected' : '' }}>Đang mở</option>
                             <option value="0" {{ $item->status ? '' : 'selected' }}>Đang khóa</option>
                         </select>
@@ -93,7 +93,42 @@
         $(document).ready(function() {
             addUser();
             editUserRole();
+            switchUserStatus();
         });
+
+        function switchUserStatus() {
+            $('.editUserStatus').change(function(e) {
+                e.preventDefault();
+                const id = $(this).attr('data-id');
+                const status = $(this).val();
+                console.log(id, status);
+
+                $.ajax({
+                    type: "POST",
+                    url: '/switchUserStatus',
+                    data: {
+                        id: id,
+                        status: status
+                    },
+                    dataType: 'json',
+                    success : (function(res) {
+                        if (res.check === true) {
+                            showToastSuccess('Thay đổi trạng thái tài khoản thành công');
+                            window.location.reload();
+                        } else {
+                            if(res.msg.id) {
+                                showToastError(res.msg.id);
+                            } else if(res.msg.status) {
+                                showToastError(res.msg.status);
+                            }
+                        }
+                    }),
+                    error : (function () {
+                        showToastError('Có lỗi xảy ra trong quá trình xử lý yêu cầu');
+                    })
+                })
+            })
+        }
 
         function editUserRole() {
             $('.editUserRole').change(function (e) {
