@@ -25,7 +25,9 @@ Route::controller(UserController::class)->group(function () {
     Route::post('/createUser','create');
     Route::post('/updateUserRole','updateUserRole');
     Route::post('/switchUserStatus','switchUserStatus');
-
+    Route::post('/updateUserName','updateUserName');
+    Route::post('/updateEmail','updateEmail');
+    Route::post('/deleteUser','destroy');
 });
 
 Route::controller(UserRoleController::class)->group(function () {

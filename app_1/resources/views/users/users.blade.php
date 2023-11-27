@@ -1,6 +1,36 @@
 @extends('layouts.layout')
 
 @section('main')
+<!-- Modal Edit User -->
+    <div class="modal" id="editUserModal">
+        <div class="modal-dialog">
+            <div class="modal-content border-none">
+                <div class="modal-header">
+                    <h4 class="modal-title">Sửa thông tin tài khoản</h4>
+                    <button type="button" class="close border-none" data-dismiss="modal">&times;</button>
+                </div>
+
+                <div class="modal-body">
+                    <form class="userForm">
+                        <div class="form-group">
+                            <label for="username">Tên tài khoản:</label>
+                            <input type="text" class="form-control  border-none" id="username" value="" name="username"
+                                   placeholder="Tên tài khoản" required>
+                            <label for="email">Email:</label>
+                            <input type="text" class="form-control  border-none" id="email" value="" name="email"
+                                   placeholder="Email" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary border-none" id="submitEditBtn">Sửa</button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary border-none" data-dismiss="modal">Đóng</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<!-- Modal Create User -->
     <div class="modal" id="userModal">
         <div class="modal-dialog">
             <div class="modal-content border-none">
@@ -15,11 +45,11 @@
                 <div class="modal-body">
                     <form class="userForm">
                         <div class="form-group">
-                            <label for="username">Tên tài khoản:</label>
-                            <input type="text" class="form-control  border-none" id="username" value="" name="username"
+                            <label for="addusername">Tên tài khoản:</label>
+                            <input type="text" class="form-control  border-none" id="newUsername" value="" name="username"
                                    placeholder="Tên tài khoản" required>
-                            <label for="email">Email:</label>
-                            <input type="text" class="form-control  border-none" id="email" value="" name="email"
+                            <label for="addemail">Email:</label>
+                            <input type="text" class="form-control  border-none" id="newEmail" value="" name="email"
                                    placeholder="Email" required>
                             <label for="userRoleSelect">Loại tài khoản:</label>
                             <select name="idRole" id="userRoleSelect" class="border-none form-control">
@@ -40,6 +70,8 @@
             </div>
         </div>
     </div>
+
+<!-- Table Content -->
 
     <div class="table-responsive">
         <h2>Danh sách các tài khoản:</h2>
@@ -69,7 +101,7 @@
                             </select>
                         </label>
                     </td>
-                    <td><span class="editEmail" data-id="{{$item -> idUser}}">{{$item -> email}}</span></td>
+                    <td><span class="pointer editEmail" data-id="{{$item -> idUser}}">{{$item -> email}}</span></td>
                     <td>
                         <label for="{{$item->idUser}}"></label>
                         <select data-id="{{$item->idUser}}" id="{{$item->idUser}}" class="editUserStatus border-none">
@@ -94,7 +126,159 @@
             addUser();
             editUserRole();
             switchUserStatus();
+            editUserName();
+            updateEmail();
+            deleteUser();
         });
+
+        function deleteUser() {
+            $(".deleteUser").click(function (e) {
+                e.preventDefault();
+                const id = $(this).attr("data-id");
+                Swal.fire({
+                    icon: "question",
+                    title: "Xóa tài khoản này ?",
+                    showDenyButton: true,
+                    showCancelButton: false,
+                    confirmButtonText: "Xóa",
+                    denyButtonText: "Hủy",
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            type: "POST",
+                            url: "/deleteUser",
+                            data: {
+                                id: id
+                            },
+                            dataType: "json",
+                            success: function (res) {
+                                if (res.check === true) {
+                                    Toast.fire({
+                                        icon: "success",
+                                        title: "Xóa thành công"
+                                    }).then(() => {
+                                        window.location.reload();
+                                    });
+                                } else {
+                                    const errorMsg = res.msg.id || res.msg;
+                                    Toast.fire({
+                                        icon: "error",
+                                        title: errorMsg
+                                    });
+                                }
+                            },
+                            error: function () {
+                                Toast.fire({
+                                    icon: "error",
+                                    title: "Có lỗi xảy ra trong quá trình xử lý yêu cầu"
+                                });
+                            }
+                        });
+                    } else if (result.isDenied) {
+                        //
+                    }
+                });
+            })
+        }
+
+        function updateEmail() {
+            $('.editEmail').click(function (e) {
+                e.preventDefault();
+                const id = $(this).attr('data-id')
+                const old = $(this).text();
+
+                $('#email').val(old);
+                $('#editUserModal').modal('show');
+                $('#username').hide();
+
+                $('#submitEditBtn').click(function (e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+
+                    const emailNew = $('#email').val().trim();
+
+                    if (emailNew === '') {
+                        showToastError('Thiếu email');
+                    } else if (emailNew === old) {
+                        showToastError('Trùng lặp email');
+                    } else {
+                        $.ajax({
+                            type: 'POST',
+                            url: '/updateEmail',
+                            data: {
+                                id: id,
+                                email: emailNew
+                            },
+                            dataType: 'json',
+                            success: (function (res) {
+                                if (res.check === true) {
+                                    showToastSuccess('Thay đổi thành công');
+                                    window.location.reload();
+                                } else {
+                                    const errorMsg = res.msg.id || res.msg.email || "Có lỗi xảy ra";
+                                    showToastError(errorMsg);
+                                }
+                            }),
+                            error: function () {
+                                showToastError('Có lỗi xảy ra trong quá trính xử lý yêu cầu');
+                            }
+                        })
+                    }
+                })
+
+
+
+
+                // alert(oldEmail);
+            })
+        }
+
+        function editUserName() {
+            $('.editUserName').click(function(e) {
+                e.preventDefault();
+                const id = $(this).attr('data-id');
+                const old = $(this).text();
+
+                $('#username').val(old);
+                $('#editUserModal').modal('show');
+                $('#email').hide();
+
+                $('#submitEditBtn').click(function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+
+                    const nameNew = $('#username').val().trim();
+
+                    if (nameNew === '') {
+                        showToastError('Thiếu tên tài khoản');
+                    } else if (nameNew === old) {
+                        showToastError('Trùng lặp tên tài khoản');
+                    } else {
+                        $.ajax({
+                            type: 'POST',
+                            url: '/updateUserName',
+                            data: {
+                                id: id,
+                                name: nameNew,
+                            },
+                            dataType: 'json',
+                            success: (function (res) {
+                                if (res.check === true) {
+                                    showToastSuccess('Thay đổi thành công');
+                                    window.location.reload();
+                                } else {
+                                    const errorMsg = res.msg.id || res.msg.name || "Có lỗi xảy ra";
+                                    showToastError(errorMsg);
+                                }
+                            }),
+                            error: function () {
+                                showToastError('Có lỗi xảy ra trong quá trính xử lý yêu cầu');
+                            }
+                        })
+                    }
+                })
+            })
+        }
 
         function switchUserStatus() {
             $('.editUserStatus').change(function(e) {
@@ -172,8 +356,8 @@
             });
 
             function handleFormSubmission() {
-                const name = $('#username').val().trim();
-                const email = $('#email').val().trim();
+                const name = $('#newUsername').val().trim();
+                const email = $('#newEmail').val().trim();
                 const idRole = $('#userRoleSelect').val();
 
                 console.log(name, email, idRole);

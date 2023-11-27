@@ -150,13 +150,6 @@ CREATE TABLE `role_tbl` (
   `updated_at` timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Đang đổ dữ liệu cho bảng `role_tbl`
---
-
-INSERT INTO `role_tbl` (`id`, `name`, `status`, `created_at`, `updated_at`) VALUES
-(2, 'student', 0, '2023-11-18 16:00:36', '2023-11-19 03:30:42');
-
 -- --------------------------------------------------------
 
 --
@@ -194,17 +187,6 @@ CREATE TABLE `users` (
   `created_at` timestamp NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Đang đổ dữ liệu cho bảng `users`
---
-
-INSERT INTO `users` (`id`, `name`, `email`, `idRole`, `status`, `phone`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
-(8, 'niam', 'niamcoder@gmail.com', 1, 1, NULL, NULL, '$2y$12$UEL/i1Gq8ZnnLuvXHfRnOuyMjJoHzbbg8aoOKbfft6T3cnkl6Ek8.', NULL, '2023-11-22 12:37:46', '2023-11-22 12:37:46');
-
---
--- Chỉ mục cho các bảng đã đổ
---
 
 --
 -- Chỉ mục cho bảng `bill_tbl`
