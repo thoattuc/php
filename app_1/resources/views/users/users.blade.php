@@ -45,10 +45,10 @@
                 <div class="modal-body">
                     <form class="userForm">
                         <div class="form-group">
-                            <label for="addusername">Tên tài khoản:</label>
+                            <label for="newUsername">Tên tài khoản:</label>
                             <input type="text" class="form-control  border-none" id="newUsername" value="" name="username"
                                    placeholder="Tên tài khoản" required>
-                            <label for="addemail">Email:</label>
+                            <label for="newEmail">Email:</label>
                             <input type="text" class="form-control  border-none" id="newEmail" value="" name="email"
                                    placeholder="Email" required>
                             <label for="userRoleSelect">Loại tài khoản:</label>
