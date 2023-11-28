@@ -221,13 +221,13 @@ class UserController extends Controller
             return response()->json(['check' => false, 'msg' => $validator->errors()]);
         }
 
-//        $check =
-//            (ClassScheduleModel::where('idTeacher', $request->id)->count('id'))
-//            +
-//            (ProcessModel::where('idTeacher', $request->id)->count('id'));
-//        if ($check !== 0) {
-//            return response()->json(['check' => false, 'msg' => 'Tài khoản có chứa class schedule hoặc process']);
-//        }
+        $check =
+            (ClassScheduleModel::where('idTeacher', $request->id)->count('id'))
+            +
+            (ProcessModel::where('idTeacher', $request->id)->count('id'));
+        if ($check !== 0) {
+            return response()->json(['check' => false, 'msg' => 'Tài khoản có chứa class schedule hoặc process']);
+        }
 
         UserModel::where('id', $request->id)->delete();
         return response()->json(['check' => true]);
