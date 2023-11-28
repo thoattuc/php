@@ -1,0 +1,65 @@
+ 0. Create laravel project
+
+ index[public] -> autoload[vendor] -> web|api|...[routes] -> views
+ start:
+    php artisan serve
+
+ create controller:
+    php artisan make:controller controller_name --model=model_name --resource
+    app\http\controllers\
+    app\http\models\
+
+ import controller into web[router]; create route;
+
+ create:
+
+    UserController; UserRoleController;
+    UserModel; UserRoleModel
+
+    dashboard;
+
+ 1. Layout
+    layout.blade;
+    roles.blade; users.blade;
+
+ group router - controller
+
+ jquery cdn -> layout
+
+ 2. CRUD User Role + CRUD User
+    create modal
+
+    add CFRS token into view
+    add validator into controller
+    required error server
+
+    edit .env config database
+    $table
+    $fillable
+
+    setup time zone: app[config]
+
+    UserRoleModel::create [controller]
+
+    view [controller]
+    @foreach
+
+    ls 22, 23
+
+    .text()
+
+    update user role
+
+ 3. CRUD User
+    create modal[user.blade]
+
+    config send mail
+
+    ls 24, 25, 26, 27
+
+ 4. Microservices
+    Scalability, Technology diversity, Resilience
+
+    Dashboard ReactJs
+
+    ls 28, 29
