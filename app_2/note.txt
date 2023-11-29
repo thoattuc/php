@@ -63,3 +63,9 @@
     Dashboard ReactJs
 
     ls 28, 29
+
+ 5. Auth
+    login -> [email, password] -> send api
+    -> Auth::login true/false
+
+

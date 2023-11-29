@@ -36,6 +36,23 @@ class UserController extends Controller
     /**
      * Show the form for creating a new resource.
      */
+
+    public function checkLogin(Request $request) {
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email|exists:users,email',
+            'password' => 'required'
+        ], [
+            'email.required' => 'Thiếu tên tài khoản',
+            'email.email' => 'Email không hợp lệ',
+            'email.exists' => 'Tài khoản không tồn tại',
+            'password.required' => 'Thiếu mật khẩu',
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['check' => false, 'msg' => $validator->errors()]);
+        }
+        dd('email', 'password');
+    }
+
     public function create(Request $request)
     {
         $validator = Validator::make($request->all(), [
