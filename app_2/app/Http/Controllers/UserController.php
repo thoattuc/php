@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\ProcessController;
 use App\Http\Controllers\ClassScheduleController;
 use App\Models\ClassScheduleModel;
@@ -50,7 +51,14 @@ class UserController extends Controller
         if ($validator->fails()) {
             return response()->json(['check' => false, 'msg' => $validator->errors()]);
         }
-        dd('email', 'password');
+
+        $user = [' email' =>$request-> email, 'password' =>$request-> password];
+        if (Auth::attempt($user, true)) {
+            return response()->json(['check' =>true]);
+        }else {
+            return response()->json(['check' =>false, 'msg' => 'Sai username hoặc password']);
+        }
+
     }
 
     public function create(Request $request)
